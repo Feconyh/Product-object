@@ -1,3 +1,5 @@
+from manufacturer import *
+
 # class Product
 class Product():
     def __init__(self, code, description, manufacturer, amount):

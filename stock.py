@@ -1,5 +1,6 @@
 from register import *
 class Stock():
+    historic = []
     # function for add/Register products
     def add_product(code):
         check = False
@@ -52,3 +53,12 @@ class Stock():
             Register.listwheel[i].code = int(input('what id do you want to change to ?\n'))
 
             print(f'Now this is the new product code: {Register.listwheel[i].code}')
+    
+    def list_historic(choice, amount, code):
+        if choice == 1: Stock.historic.append(f'{amount} purchase, of product of code: {code}')
+        if choice == 2: Stock.historic.append(f'{amount} Sell, of product of code: {code}')
+        
+    def print_historic():
+        for i in range(len(Stock.historic)):
+            print('='*17,f'{i+1}','='*17)
+            print(Stock.historic[i])
