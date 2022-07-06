@@ -1,9 +1,15 @@
-from stock import *
 from control_moviment import *
+from stock import *
 
 # class that run this program
 class Run():
-    def list():
+    def __init__(self):
+        self.Stock = Stock()
+        self.Buy = Buy()
+        self.Sell = Sell()
+        
+
+    def list(self):
         exit = False
         while exit == False:
             print('\n 1 - Register'
@@ -17,33 +23,27 @@ class Run():
             decision = input('Your choice: ')
 
             if decision == '1':
-                code = int(input('Which code you this product ?\n'))
-                Stock.add_product(code)
+                self.code = int(input('Which code you this product ?\n'))
+                self.Stock.add_product(self.code)
 
             elif decision == '2':
-                code = input('Which code do you want ?\n')
-                Stock.reach_list(code)
+                self.code = input('Which code do you want ?\n')
+                self.Stock.reach_list(self.code)
 
             elif decision == '3':
-                code = int(input('That the code of this product ?\n'))
-                Stock.change(code)
+                self.code = int(input('That the code of this product ?\n'))
+                self.Stock.change(self.code)
 
             elif decision == '4':
-                code = int(input('report the code of the product: '))
-                amount = int(input('report the amount: '))
-
-                Buy.purchase(code,amount)
-                Stock.list_historic(1, amount, code)
+                self.code = int(input('report the code of the product: '))
+                self.Buy.purchase(self.code,self.Stock)
 
             elif decision == '5':
-                code = int(input('report the code of the product: '))
-                amount = int(input('report the amount: '))
-
-                Sell.selling(code,amount)
-                Stock.list_historic(2, amount, code)
+                self.code = int(input('report the code of the product: '))
+                self.Sell.selling(self.code,self.Stock)
             
             elif decision == '6':
-                Stock.print_historic()
+                self.Stock.print_historic()
 
             elif decision == '7':
                 exit = True

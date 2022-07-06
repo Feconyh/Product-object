@@ -1,34 +1,66 @@
-from register import *
 from stock import *
+from register import *
 
 class Buy():
-    def purchase(code,amount):
+    def __init__(self):
+        pass
 
-        for i in range(len(Register.listwheel)):
-            if code == Register.listwheel[i].code:
-                if amount <= Register.listwheel[i].amount and amount > 0:
-                    print('Thank you, for the purchase here')
+    def purchase(self, code,who):
+        path = who.Register
+        check = False
+        check_stock = False
 
-                    Register.listwheel[i].amount -= amount
-                    
-                else:
-                    print('excuse me, we\'re out of stock')
+        # verify if this code exists
+        for i in range(len(path.listwheel)):
+            if code == path.listwheel[i].code:
+                check = True
+                num = i
 
-            elif code != Register.listwheel[i].code:
-                 print('excuse me, this product not exist')
+                # ask the amount
+                amount = int(input('report the amount: '))
+
+                # verify the amount
+                if amount <= path.listwheel[i].amount and amount > 0:
+                    check_stock = True
+
+        # if the amount is valid and the code exists print ('thank you,...')
+        if check == True and check_stock == True:
+            who.list_historic(1, amount, code)
+            path.listwheel[num].amount -= amount
+            print('Thank you, for the purchase here')
+
+        # if the two checks are False print ('excuse me, ...')
+        if check == False or check_stock == False:
+            print('excuse me, this product doesn\'t exist or we\'re out of stock')
 
 class Sell():
-    def selling(code,amount):
+    def __init__(self):
+        pass
 
-        for i in range(len(Register.listwheel)):
-            if code == Register.listwheel[i].code:
+    def selling(self, code,who):
+        path = who.Register
+        check = False
+        check_stock = False
+
+        # verify if this code exists
+        for i in range(len(path.listwheel)):
+            if code == path.listwheel[i].code:
+                check = True
+                num = i
+                
+                # ask the amount
+                amount = int(input('report the amount: '))
+
+                # verify the amount
                 if amount > 0:
-                    print('Thank you, for the sale here')
+                    check_stock = True
 
-                    Register.listwheel[i].amount += amount
-
-                if amount <= 0:
-                    print('Please, report a valor true')
-                    
-            elif code != Register.listwheel[i].code:
-                print('excuse me, this product not exist')
+        # if the amount is valid and the code exists print ('thank you,...')
+        if check == True and check_stock == True:
+            who.list_historic(2, amount, code)
+            path.listwheel[num].amount += amount
+            print('Thank you, for the sale here')
+        
+        # if the two checks are False print ('excuse me, ...')
+        if check == False or check_stock == False:
+            print('excuse me, this product doesn\'t exist or this value doesn\'t valid')

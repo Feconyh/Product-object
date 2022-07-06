@@ -5,7 +5,11 @@ class Product():
     def __init__(self, code, description, manufacturer, amount):
         self.code = code
         self.description = description
-        self.manufacturer = manufacturer
+        
+        for i in manu.manufacturers:
+            if i == manufacturer:
+                self.manufacturer = i
+
         self.amount = amount
 
     def __str__(self):

@@ -1,11 +1,15 @@
 from register import *
+
 class Stock():
-    historic = []
-    # function for add/Register products
-    def add_product(code):
+    def __init__(self):
+        self.historic = []
+        self.Register = Register()
+        
+    # function for add/self.Register products
+    def add_product(self, code):
         check = False
-        for i in range(len(Register.listwheel)): # Run the list and verify if this code exists already
-            if code == Register.listwheel[i].code:
+        for i in range(len(self.Register.listwheel)): # Run the list and verify if this code exists already
+            if code == self.Register.listwheel[i].code:
                 check = True
 
         if check == True: # if so report back to the user
@@ -13,52 +17,64 @@ class Stock():
 
         elif check == False: # otherwise create a new product
             print(f'Code: {code}')
-            description = str(input('Description: '))
-            manufacturer = str(input('Manufacturer: '))
-            amount = int(input('Amount: '))
-            Register.create_list(code, description, manufacturer, amount)
+            self.description = str(input('Description: '))
+            self.manufacturer = str(input('Manufacturer: '))
+            self.amount = int(input('Amount: '))
+            self.Register.create_list(code, self.description, self.manufacturer, self.amount)
   
-    def reach_list(code):
+    def reach_list(self, code):
 
         if code == '':
-            for i in range(len(Register.listwheel)):
-                print(Register.listwheel[i])
+            for i in range(len(self.Register.listwheel)):
+                print(self.Register.listwheel[i])
                 print('='*30)
         else:
             code = int(code)
             check = False
             num = 0
-            for i in range(len(Register.listwheel)):
-                if code == Register.listwheel[i].code:
+            for i in range(len(self.Register.listwheel)):
+                if code == self.Register.listwheel[i].code:
                     check = True
                     num = i
 
             if check == True:
-                print(Register.listwheel[num])
+                print(self.Register.listwheel[num])
                 
                 
             elif check == False:
                 print('This code does not exists')
 
-    def change(code):
+    def change(self, code):
         check = False
-        for i in range(len(Register.listwheel)):
-            if code == Register.listwheel[i].code:
-                check == True
-        
+        check_again = False
+        for i in range(len(self.Register.listwheel)):
+            if code == self.Register.listwheel[i].code:
+                check = True
+                num = i
+                
         if check == True:
-            print('This code already exists')
+            code = int(input('what id do you want to change to ?\n'))
+
+            for i in range(len(self.Register.listwheel)):
+                if code == self.Register.listwheel[i].code:
+                    check_again = True
+                
+            if check_again == True:
+                print(f'This code already exist in other')
+
+            elif check_again == False:
+                self.Register.listwheel[num].code = code
+                print(f'Now this is the new product code: {self.Register.listwheel[i].code}')
 
         elif check == False:
-            Register.listwheel[i].code = int(input('what id do you want to change to ?\n'))
+            print('This code not exists')
 
-            print(f'Now this is the new product code: {Register.listwheel[i].code}')
     
-    def list_historic(choice, amount, code):
-        if choice == 1: Stock.historic.append(f'{amount} purchase, of product of code: {code}')
-        if choice == 2: Stock.historic.append(f'{amount} Sell, of product of code: {code}')
+    def list_historic(self, choice, amount, code):
+        if choice == 1: self.historic.append(f'{amount} purchase, of product of code: {code}')
+        if choice == 2: self.historic.append(f'{amount} Sell, of product of code: {code}')
         
-    def print_historic():
-        for i in range(len(Stock.historic)):
+    def print_historic(self):
+        for i in range(len(self.historic)):
             print('='*17,f'{i+1}','='*17)
-            print(Stock.historic[i])
+            print(self.historic[i])
