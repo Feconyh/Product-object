@@ -1,6 +1,3 @@
-from stock import *
-from register import *
-
 class Buy():
     def __init__(self):
         pass

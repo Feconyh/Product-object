@@ -6,8 +6,10 @@ class Stock():
         self.Register = Register()
         
     # function for add/self.Register products
-    def add_product(self, code):
+    def add_product(self, code, who):
         check = False
+        check_manufacturer = False
+        loop = True
         for i in range(len(self.Register.listwheel)): # Run the list and verify if this code exists already
             if code == self.Register.listwheel[i].code:
                 check = True
@@ -18,11 +20,37 @@ class Stock():
         elif check == False: # otherwise create a new product
             print(f'Code: {code}')
             self.description = str(input('Description: '))
-            self.manufacturer = str(input('Manufacturer: '))
-            self.amount = int(input('Amount: '))
-            self.Register.create_list(code, self.description, self.manufacturer, self.amount)
+
+            while loop:
+                self.manufacturer = str(input('Manufacturer: '))
+
+                for i in who.manufacturers:
+                    if i == self.manufacturer:
+                        check_manufacturer = True
+                        num = i
+
+                if check_manufacturer == True:
+                    loop = False
+                    self.manufacturer = num
+
+                    self.amount = int(input('Amount: '))
+                    self.Register.create_list(code, self.description, self.manufacturer, self.amount)
   
-    def reach_list(self, code):
+                if check_manufacturer == False:
+                    print('Name not exists')
+
+                    decision = input('Name doesn\'t exist \nWant more one try ?\n')
+                    if decision == 'yes':
+                        loop = True
+                    
+                    if decision == '':
+                        loop = False
+                        self.manufacturer = 'No Name'
+
+                        self.amount = int(input('Amount: '))
+                        self.Register.create_list(code, self.description, self.manufacturer, self.amount)
+  
+    def found_list(self, code):
 
         if code == '':
             for i in range(len(self.Register.listwheel)):
@@ -42,7 +70,7 @@ class Stock():
                 
                 
             elif check == False:
-                print('This code does not exists')
+                print('This code doesn\'t exists')
 
     def change(self, code):
         check = False
@@ -68,7 +96,6 @@ class Stock():
 
         elif check == False:
             print('This code not exists')
-
     
     def list_historic(self, choice, amount, code):
         if choice == 1: self.historic.append(f'{amount} purchase, of product of code: {code}')
