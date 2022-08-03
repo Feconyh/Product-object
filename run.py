@@ -10,7 +10,6 @@ class Run():
         self.Sell = Sell()
         self.Manufacturer = Manufacturer()
         
-
     def list(self):
         exit = False
         while exit == False:
